@@ -62,7 +62,8 @@ proj_B = proj_B[k]
 
 seRNAcombined <- cbind(assay(seRNA_A), assay(seRNA_B))
 seRNA_all <- SummarizedExperiment(assays = list(counts = seRNAcombined), rowRanges = rowRanges(seRNA_A))
-project_ALL <- ArchRProject(ArrowFiles = ArrowFiles, outputDirectory = "mouseBrain", copyArrows = FALSE)
+proj_ALL <- ArchRProject(ArrowFiles = ArrowFiles, outputDirectory = "mouseBrain", copyArrows = TRUE)
+proj_ALL <- addTileMatrix(proj_ALL,binarize = FALSE,force= TRUE)
 proj_ALL <- addGeneExpressionMatrix(input = project_ALL, seRNA = seRNA_all)
 saveArchRProject(ArchRProj = proj_ALL, outputDirectory = "mouseBrain", load = FALSE)
 

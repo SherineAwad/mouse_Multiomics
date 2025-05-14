@@ -8,20 +8,39 @@ library(pheatmap)
 library(chromVARmotifs)
 library(EnsDb.Mmusculus.v79)
 library(BSgenome.Mmusculus.UCSC.mm10)
+library(irlba)
 
-setwd("/nfs/turbo/umms-thahoang/sherine/mouse_Multiomics")
+
 addArchRThreads(threads = 4) 
 addArchRGenome("mm10")
+
+setwd("/nfs/turbo/umms-thahoang/sherine/mouse_Multiomics")
 project_name ="mouseBrain"
 
 proj_ALL <- loadArchRProject(path = project_name, force = FALSE, showLogo = TRUE)
+
+class(proj_ALL)
+
+names(proj_ALL)
+
+#proj_ALL <- addTileMatrix(proj_ALL, force = TRUE)  # This will recalculate the TileMatrix
+
+
+
+#saveArchRProject(ArchRProj = proj_ALL, outputDirectory = "mouseBrain", load = FALSE)
+
+
+
+getAvailableMatrices(proj_ALL)
+
+
 
 #LSI-ATAC
 proj_ALL <- addIterativeLSI(
     ArchRProj = proj_ALL, 
     clusterParams = list(
       resolution = 0.2, 
-      sampleCells = 10000,
+      sampleCellsPre = 10000,
       n.start = 10
     ),
     saveIterations = FALSE,
@@ -29,6 +48,7 @@ proj_ALL <- addIterativeLSI(
     depthCol = "nFrags",
     name = "LSI_ATAC"
 )
+
 
 #LSI-RNA
 proj_ALL <- addIterativeLSI(
@@ -49,6 +69,8 @@ proj_ALL <- addIterativeLSI(
 
 saveArchRProject(ArchRProj = proj_ALL, outputDirectory = "mouseBrain", load = FALSE)
 
+if (False)
+{
 #-----------------------------------
 proj_ALL <- addCombinedDims(proj_ALL, reducedDims = c("LSI_ATAC", "LSI_RNA"), name =  "LSI_Combined")
 proj_ALL <- addUMAP(proj_ALL, reducedDims = "LSI_ATAC", name = "UMAP_ATAC", minDist = 0.8, force = TRUE)
@@ -110,4 +132,4 @@ dev.off()
 saveArchRProject(ArchRProj = proj_ALL, outputDirectory = "mouseBrain", load = FALSE)
 
 
-
+}
