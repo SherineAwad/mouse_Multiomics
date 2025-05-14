@@ -19,58 +19,6 @@ project_name ="mouseBrain"
 
 proj_ALL <- loadArchRProject(path = project_name, force = FALSE, showLogo = TRUE)
 
-class(proj_ALL)
-
-names(proj_ALL)
-
-#proj_ALL <- addTileMatrix(proj_ALL, force = TRUE)  # This will recalculate the TileMatrix
-
-
-
-#saveArchRProject(ArchRProj = proj_ALL, outputDirectory = "mouseBrain", load = FALSE)
-
-
-
-getAvailableMatrices(proj_ALL)
-
-
-
-#LSI-ATAC
-proj_ALL <- addIterativeLSI(
-    ArchRProj = proj_ALL, 
-    clusterParams = list(
-      resolution = 0.2, 
-      sampleCellsPre = 10000,
-      n.start = 10
-    ),
-    saveIterations = FALSE,
-    useMatrix = "TileMatrix", 
-    depthCol = "nFrags",
-    name = "LSI_ATAC"
-)
-
-
-#LSI-RNA
-proj_ALL <- addIterativeLSI(
-    ArchRProj = proj_ALL, 
-    clusterParams = list(
-      resolution = 0.2, 
-      sampleCells = 10000,
-      n.start = 10
-    ),
-    saveIterations = FALSE,
-    useMatrix = "GeneExpressionMatrix", 
-    depthCol = "Gex_nUMI",
-    varFeatures = 2500,
-    firstSelection = "variable",
-    binarize = FALSE,
-    name = "LSI_RNA"
-)
-
-saveArchRProject(ArchRProj = proj_ALL, outputDirectory = "mouseBrain", load = FALSE)
-
-if (False)
-{
 #-----------------------------------
 proj_ALL <- addCombinedDims(proj_ALL, reducedDims = c("LSI_ATAC", "LSI_RNA"), name =  "LSI_Combined")
 proj_ALL <- addUMAP(proj_ALL, reducedDims = "LSI_ATAC", name = "UMAP_ATAC", minDist = 0.8, force = TRUE)
@@ -124,12 +72,12 @@ dev.off()
 figure_name <- project_name
 figure_name <- paste(figure_name,"_SamplesUMAP.pdf", sep="")
 pdf(file =figure_name, width=12)
-p1 <- plotEmbedding(ArchRProj = proj_ALL, colorBy = "cellColData", name = "Sample", embedding = "UMAP_Combined")
+#p1 <- plotEmbedding(ArchRProj = proj_ALL, colorBy = "cellColData", name = "Sample", embedding = "UMAP_Combined")
 p2 <- plotEmbedding(ArchRProj = proj_ALL, colorBy = "cellColData", name = "Clusters_Combined", embedding = "UMAP_Combined")
-ggAlignPlots(p1, p2, type = "h")
+#ggAlignPlots(p1, p2, type = "h")
+ggAlignPlots(p2, type = "h")
 dev.off()
 
 saveArchRProject(ArchRProj = proj_ALL, outputDirectory = "mouseBrain", load = FALSE)
 
 
-}
