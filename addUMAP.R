@@ -47,35 +47,47 @@ p <- plotGroups(
 p
 dev.off()
 
-#----------------------------------
-figure_name <- project_name
-figure_name <- paste(figure_name,"_clustersUMAP.pdf", sep="")
-pdf(file =figure_name, width=12)
-p1 <- plotEmbedding(proj_ALL, name = "Clusters_ATAC", embedding = "UMAP_ATAC", size = 1.5, labelAsFactors=F, labelMeans=F)
-p2 <- plotEmbedding(proj_ALL, name = "Clusters_RNA", embedding = "UMAP_RNA", size = 1.5, labelAsFactors=F, labelMeans=F)
-p3 <- plotEmbedding(proj_ALL, name = "Clusters_Combined", embedding = "UMAP_Combined", size = 1.5, labelAsFactors=F, labelMeans=F)
-p1 + p2 + p3 + patchwork::plot_layout(nrow = 1, guides = "collect")
-p <- lapply(list(p1,p2,p3), function(x){
-  x + guides(color = "none", fill = "none") +
-    theme_ArchR(baseSize = 6.5) +
-    theme(plot.margin = unit(c(0.1, 0.1, 0.1, 0.1), "cm")) +
-    theme(
-      axis.text.x=element_blank(),
-      axis.ticks.x=element_blank(),
-      axis.text.y=element_blank(),
-      axis.ticks.y=element_blank()
-    )
-})
-do.call(cowplot::plot_grid, c(list(ncol = 3),p))
-dev.off()
-
 figure_name <- project_name
 figure_name <- paste(figure_name,"_SamplesUMAP.pdf", sep="")
 pdf(file =figure_name, width=12)
-#p1 <- plotEmbedding(ArchRProj = proj_ALL, colorBy = "cellColData", name = "Sample", embedding = "UMAP_Combined")
+p1 <- plotEmbedding(ArchRProj = proj_ALL, colorBy = "cellColData", name = "Sample", embedding = "UMAP_Combined") 
 p2 <- plotEmbedding(ArchRProj = proj_ALL, colorBy = "cellColData", name = "Clusters_Combined", embedding = "UMAP_Combined")
-#ggAlignPlots(p1, p2, type = "h")
-ggAlignPlots(p2, type = "h")
+p1
+p2
+dev.off()
+
+
+# Define figure name and save the plot as a PDF
+figure_name <- project_name
+figure_name <- paste(figure_name, "_clustersUMAP.pdf", sep = "")
+pdf(file = figure_name, width = 12)
+
+# Generate UMAP plots for different clusters
+p1 <- plotEmbedding(proj_ALL, name = "Clusters_ATAC", embedding = "UMAP_ATAC", size = 1.5, labelAsFactors = FALSE, labelMeans = FALSE)
+p2 <- plotEmbedding(proj_ALL, name = "Clusters_RNA", embedding = "UMAP_RNA", size = 1.5, labelAsFactors = FALSE, labelMeans = FALSE)
+p3 <- plotEmbedding(proj_ALL, name = "Clusters_Combined", embedding = "UMAP_Combined", size = 1.5, labelAsFactors = FALSE, labelMeans = FALSE)
+
+# Combine the plots horizontally using patchwork
+p_combined <- p1 + p2 + p3 + patchwork::plot_layout(nrow = 1, guides = "collect")
+
+# Apply theme customizations to all plots
+p_customized <- lapply(list(p1, p2, p3), function(x) {
+  x + 
+    theme_ArchR(baseSize = 6.5) +  # Use the ArchR theme
+    theme(
+      plot.margin = unit(c(0.1, 0.1, 0.1, 0.1), "cm"),  # Set plot margins
+      axis.text.x = element_blank(),  # Remove x-axis text
+      axis.ticks.x = element_blank(),  # Remove x-axis ticks
+      axis.text.y = element_blank(),  # Remove y-axis text
+      axis.ticks.y = element_blank()   # Remove y-axis ticks
+    ) +
+    guides(color = guide_none(), fill = guide_none())  # Remove legends
+})
+
+# Combine customized plots into one plot grid
+do.call(cowplot::plot_grid, c(list(ncol = 3), p_customized))
+
+# Close the PDF device
 dev.off()
 
 saveArchRProject(ArchRProj = proj_ALL, outputDirectory = "mouseBrain", load = FALSE)
