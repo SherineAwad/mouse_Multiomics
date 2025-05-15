@@ -18,8 +18,19 @@ proj_ALL <- loadArchRProject(path = project_name, force = FALSE, showLogo = TRUE
 
 
 head(proj_ALL@cellColData)
-proj_ALL <- proj_ALL[proj_ALL$TSSEnrichment > 10 & proj_ALL$nFrags > 5000 & !is.na(proj_ALL$Gex_nUMI)]
-proj_ALL <- proj_ALL[proj_ALL$Gex_nGenes > 500 & proj_ALL$Gex_nGenes < 5000 & proj_ALL$Gex_nUMI > 1000 & proj_ALL$Gex_nUMI < 15000  ]
+
+# Match ATAC quality thresholds — up to you if you keep as-is
+proj_ALL <- proj_ALL[proj_ALL$TSSEnrichment > 10 &
+                     proj_ALL$nFrags > 5000 &
+                     !is.na(proj_ALL$Gex_nUMI)]
+
+# Match Scanpy-style RNA QC
+proj_ALL <- proj_ALL[proj_ALL$Gex_nGenes > 1000 &
+                     proj_ALL$Gex_nGenes < 7000 &
+                     proj_ALL$Gex_nUMI > 1500 &
+                     proj_ALL$Gex_nUMI < 30000]
+
+
 
 
 #After Filtering 

@@ -19,6 +19,47 @@ project_name ="mouseBrain"
 
 proj_ALL <- loadArchRProject(path = project_name, force = FALSE, showLogo = TRUE)
 
+# Reorder the factor levels to explicitly assign "Control" as 1 and "KO" as 2
+cell_metadata$Sample <- factor(cell_metadata$Sample, levels = c("Control", "KO"))
+
+# Verify the order
+head(cell_metadata$Sample)
+
+#LSI-ATAC
+proj_ALL <- addIterativeLSI(
+    ArchRProj = proj_ALL,
+    clusterParams = list(
+      resolution = 0.2,
+      sampleCellsPre = 10000,
+      n.start = 10
+    ),
+    saveIterations = FALSE,
+    useMatrix = "TileMatrix",
+    depthCol = "nFrags",
+    name = "LSI_ATAC"
+)
+
+
+#LSI-RNA
+proj_ALL <- addIterativeLSI(
+    ArchRProj = proj_ALL,
+    clusterParams = list(
+      resolution = 0.2,
+      sampleCells = 10000,
+      n.start = 10
+    ),
+    saveIterations = FALSE,
+    useMatrix = "GeneExpressionMatrix",
+    depthCol = "Gex_nUMI",
+    varFeatures = 2500,
+    firstSelection = "variable",
+    binarize = FALSE,
+    name = "LSI_RNA"
+)
+
+
+
+
 #-----------------------------------
 proj_ALL <- addCombinedDims(proj_ALL, reducedDims = c("LSI_ATAC", "LSI_RNA"), name =  "LSI_Combined")
 proj_ALL <- addUMAP(proj_ALL, reducedDims = "LSI_ATAC", name = "UMAP_ATAC", minDist = 0.8, force = TRUE)
@@ -47,6 +88,8 @@ p <- plotGroups(
 p
 dev.off()
 
+
+
 figure_name <- project_name
 figure_name <- paste(figure_name,"_SamplesUMAP.pdf", sep="")
 pdf(file =figure_name, width=12)
@@ -55,6 +98,8 @@ p2 <- plotEmbedding(ArchRProj = proj_ALL, colorBy = "cellColData", name = "Clust
 p1
 p2
 dev.off()
+
+
 
 
 # Define figure name and save the plot as a PDF
