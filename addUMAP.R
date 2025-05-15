@@ -19,12 +19,8 @@ project_name ="mouseBrain"
 
 proj_ALL <- loadArchRProject(path = project_name, force = FALSE, showLogo = TRUE)
 
-# Reorder the factor levels to explicitly assign "Control" as 1 and "KO" as 2
-cell_metadata$Sample <- factor(cell_metadata$Sample, levels = c("Control", "KO"))
-
-# Verify the order
-head(cell_metadata$Sample)
-
+if (FALSE)
+{
 #LSI-ATAC
 proj_ALL <- addIterativeLSI(
     ArchRProj = proj_ALL,
@@ -56,7 +52,7 @@ proj_ALL <- addIterativeLSI(
     binarize = FALSE,
     name = "LSI_RNA"
 )
-
+}
 
 
 
