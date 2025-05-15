@@ -1,0 +1,8 @@
+#---------------------------------------------------
+#General Parameters 
+#---------------------------------------------------
+ALL: "Zebrafishes"
+SAMPLES: "samples.tsv"
+ANNOFILE: "annotations.txt"
+Control: "Control"
+KO: "KO"
