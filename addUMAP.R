@@ -19,8 +19,6 @@ project_name ="mouseBrain"
 
 proj_ALL <- loadArchRProject(path = project_name, force = FALSE, showLogo = TRUE)
 
-if (FALSE)
-{
 #LSI-ATAC
 proj_ALL <- addIterativeLSI(
     ArchRProj = proj_ALL,
@@ -52,9 +50,6 @@ proj_ALL <- addIterativeLSI(
     binarize = FALSE,
     name = "LSI_RNA"
 )
-}
-
-
 
 #-----------------------------------
 proj_ALL <- addCombinedDims(proj_ALL, reducedDims = c("LSI_ATAC", "LSI_RNA"), name =  "LSI_Combined")
