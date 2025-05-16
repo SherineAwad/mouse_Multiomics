@@ -8,6 +8,7 @@ rule all:
             "mouseBrain_SamplesUMAP.pdf",
             "mouseBrain_clustersUMAP.pdf", 
             "mouseBrain_perClustersnUMI.pdf",
+            "mouseBrain/Plots/QC_on_metrics.pdf", 
 
 rule preprocess: 
         input:
@@ -47,4 +48,27 @@ rule UMAP:
           """
           Rscript addUMAP.R
           """
+rule Inspect: 
+     input: 
+           expand("mouseBrain/ArrowFiles/{Control}.arrow", Control= config['Control']),
+           expand("mouseBrain/ArrowFiles/{KO}.arrow", KO= config['KO']),
+     output: 
+        "mouseBrain/Plots/QC_on_metrics.pdf",
+     shell:  
+       """
+       Rscript inspect.R 
+       """
+
+
+rule callDGE: 
+     input:
+        "mouseBrain_SamplesUMAP.pdf",
+        "mouseBrain_clustersUMAP.pdf",
+        "mouseBrain_perClustersnUMI.pdf",
+     output: 
+         "UMAP_GeneScore_AllMarkers.pdf"  
+     shell:
+         """
+         Rscript callDGE.R
+         """
 
