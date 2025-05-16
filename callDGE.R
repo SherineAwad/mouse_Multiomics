@@ -46,7 +46,7 @@ for (gene in markerGenes) {
       ArchRProj = proj_ALL,
       colorBy = "GeneScoreMatrix",
       name = gene,
-      embedding = "UMAP_Combined"
+      embedding = "UMAP_Combined",
     )
     allPlots[[gene]] <- p
   } else {
@@ -56,7 +56,6 @@ for (gene in markerGenes) {
 
 # Save all plots in one PDF
 plotPDF(allPlots, name = "UMAP_GeneScore_AllMarkers.pdf", ArchRProj = proj_ALL, addDOC = FALSE, width = 5, height = 5)
-
 
 
 # Get available gene names from the GeneScoreMatrix
@@ -69,7 +68,7 @@ for (gene in markerGenes) {
       ArchRProj = proj_ALL,
       colorBy = "GeneScoreMatrix",
       name = gene,
-      embedding = "UMAP_Combined"
+      embedding = "UMAP_Combined",
     )
     plotPDF(p, name = paste0("UMAP_GeneScore_", gene, ".pdf"), ArchRProj = proj_ALL, addDOC = FALSE)
   } else {
@@ -77,5 +76,5 @@ for (gene in markerGenes) {
   }
 }
 
-saveArchRProject(ArchRProj = proj_ALL, outputDirectory = project_name, load = FALSE)
 
+saveArchRProject(ArchRProj = proj_ALL, outputDirectory = project_name, load = FALSE)
