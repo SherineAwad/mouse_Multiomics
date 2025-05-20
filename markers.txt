@@ -3,7 +3,6 @@ Cdk1
 Aldh1l1
 Ascl1
 Sox10
-Cdk1
 Dcx
 Elavl3
 S100b

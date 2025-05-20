@@ -19,6 +19,8 @@ project_name ="mouseBrain"
 
 proj_ALL <- loadArchRProject(path = project_name, force = FALSE, showLogo = TRUE)
 
+if (FALSE)
+{
 #LSI-ATAC
 proj_ALL <- addIterativeLSI(
     ArchRProj = proj_ALL,
@@ -51,12 +53,12 @@ proj_ALL <- addIterativeLSI(
     name = "LSI_RNA"
 )
 
+}
 #-----------------------------------
-proj_ALL <- addCombinedDims(proj_ALL, reducedDims = c("LSI_ATAC", "LSI_RNA"), name =  "LSI_Combined")
-proj_ALL <- addUMAP(proj_ALL, reducedDims = "LSI_ATAC", name = "UMAP_ATAC", minDist = 0.8, force = TRUE)
-proj_ALL <- addUMAP(proj_ALL, reducedDims = "LSI_RNA", name = "UMAP_RNA", minDist = 0.8, force = TRUE)
-proj_ALL <- addUMAP(proj_ALL, reducedDims = "LSI_Combined", dimsToUse = 1:20, name = "UMAP_Combined", minDist = 0.4, force = TRUE)
-
+#proj_ALL <- addCombinedDims(proj_ALL, reducedDims = c("LSI_ATAC", "LSI_RNA"), name =  "LSI_Combined", force =TRUE)
+#proj_ALL <- addUMAP(proj_ALL, reducedDims = "LSI_ATAC", name = "UMAP_ATAC", minDist = 0.8, force = TRUE)
+#proj_ALL <- addUMAP(proj_ALL, reducedDims = "LSI_RNA", name = "UMAP_RNA", minDist = 0.8, force = TRUE)
+proj_ALL <- addUMAP(proj_ALL, reducedDims = "LSI_Combined", dimsToUse = 1:80, name = "UMAP_Combined", minDist = 0.4, force = TRUE)
 #-----------------------------
 #Add Clusters
 #----------------------------
