@@ -15,6 +15,20 @@ setwd("/nfs/turbo/umms-thahoang/sherine/mouse_Multiomics")
 project_name ="mouseBrain"
 proj_ALL <- loadArchRProject(path = project_name, force = FALSE, showLogo = TRUE)
 
+
+# Get cell metadata
+cell_metadata <- getCellColData(proj_ALL)
+
+# Check column names to find the sample column
+colnames(cell_metadata)
+
+# Usually the sample info is in a column named "Sample" or similar.
+# Let's assume the column is called "Sample"
+
+# Count cells per sample
+table(cell_metadata$Sample)
+
+
 p <-  plotEmbedding(
   ArchRProj = proj_ALL,
   colorBy = "cellColData",
@@ -82,4 +96,6 @@ p4 <- p4 + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 plotPDF(p1, p2,p3, p4, name = "QC_on_metrics.pdf", ArchRProj = proj_ALL, addDOC = FALSE)
 dev.off()
+
+
 
