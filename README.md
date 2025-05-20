@@ -19,4 +19,24 @@ This project analyzes **single-cell RNA-seq (scRNA-seq)** and **single-cell ATAC
 
 
 
+## Plots 
+
+
+# UMAP Plots
+
+- [CLUSTERS UMAP](mouseBrain_clustersUMAP.pdf)
+- [UMAP PER SAMPLE](mouseBrain_SamplesUMAP.pdf)
+- [MARKER GENES UMAP](Rplots.pdf)
+
+
+
+## Cell Counts Per Sample
+
+| Sample  | Cell Count |
+|---------|------------|
+| Control | 3686       |
+| KO      | 3757       |
+
+
+
 
