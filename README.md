@@ -21,16 +21,26 @@ This project analyzes **single-cell RNA-seq (scRNA-seq)** and **single-cell ATAC
 
 ## Plots 
 
+### UMAP and Cluster Plots
 
-# UMAP Plots
+#### Clustering Overview
+![Clusters UMAP](mouseBrain_ClustersUMAP.png)
 
-- [CLUSTERS UMAP](mouseBrain_clustersUMAP.pdf)
-- [UMAP PER SAMPLE](mouseBrain_SamplesUMAP.pdf)
+#### UMAP by Cluster
+![UMAP by Cluster](mouseBrain_SamplesUMAP_byCluster.png)
+
+#### UMAP by Sample
+![UMAP by Sample](mouseBrain_SamplesUMAP_bySample.png)
+
+#### nUMI per Cluster
+![nUMI per Cluster](mouseBrain_perClustersnUMI.png)
+
+
+### Marker Genes UMAPs 
 - [MARKER GENES UMAP](Rplots.pdf)
 
 
-
-## Cell Counts Per Sample
+### Cell Counts Per Sample
 
 | Sample  | Cell Count |
 |---------|------------|
