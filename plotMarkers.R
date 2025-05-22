@@ -59,23 +59,33 @@ plot_gene_umap_zscore <- function(proj, gene_symbol) {
   
   # Data frame for plotting
   df <- data.frame(embedding_sub, ExpressionZ = expr_zscore)
-  
   # Plot UMAP colored by z-scored expression
-  p <- ggplot(df, aes(x = UMAP_1, y = UMAP_2, color = ExpressionZ)) +
-    geom_point(size = 0.5) +
-    scale_color_viridis_c(option = "viridis") +
-    theme_minimal() +
-    ggtitle(paste0("UMAP: Z-score normalized ", gene_symbol))
-  
-  print(p)
-  
-  # Save PDF using ArchR helper
-  plotPDF(p,
-          name = paste0("UMAP_Zscore_", gene_symbol, ".pdf"),
-          ArchRProj = proj,
-          addDOC = FALSE,
-          width = 5,
-          height = 5)
+p <- ggplot(df, aes(x = UMAP_1, y = UMAP_2, color = ExpressionZ)) +
+  geom_point(size = 0.5) +
+  scale_color_gradientn(
+    colors = c("#add8e6", "#8B0000"),  # Deep red to light blue
+    limits = c(min(df$ExpressionZ, na.rm = TRUE), max(df$ExpressionZ, na.rm = TRUE))
+  ) +
+  theme_minimal() +
+  ggtitle(paste0("UMAP: Z-score normalized ", gene_symbol))
+
+print(p)
+
+# Save PDF using ArchR helper
+plotPDF(
+  p,
+  name = paste0("UMAP_Zscore_", gene_symbol, ".pdf"),
+  ArchRProj = proj,
+  addDOC = FALSE,
+  width = 5,
+  height = 5
+)
+
+ 
+ 
+
+
+
 }
 
 # Loop through marker genes and plot
