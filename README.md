@@ -41,7 +41,7 @@ This project analyzes **single-cell RNA-seq (scRNA-seq)** and **single-cell ATAC
 ### Annotations 
 ![Annotations](mouseBrain_CellTypeUMAP_annotated.png)
 
-##Filtered: We removed cluster 1,2, 3, 4, and 20  then reClustered
+### Filtered: We removed cluster 1,2, 3, 4, and 20  then reClustered
 ![Filtered](UMAP_Clusters_filtered.png)
 
 
