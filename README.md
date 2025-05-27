@@ -36,7 +36,7 @@ This project analyzes **single-cell RNA-seq (scRNA-seq)** and **single-cell ATAC
 
 
 ### Marker Genes UMAPs 
-- [MARKER GENES UMAP](Rplots.pdf)
+![MARKER GENES UMAP](Rplots.pdf)
 
 ### Annotations 
 ![Annotations](mouseBrain_CellTypeUMAP_annotated.png)
