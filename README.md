@@ -45,7 +45,12 @@ This project analyzes **single-cell RNA-seq (scRNA-seq)** and **single-cell ATAC
 ![Filtered](mouseBrain_CellTypeUMAP_Filtered.png)
 
 ### Marker Genes UMAPs after removing outlier Clusters
-- [MARKER GENES UMAP After Filter](Rplotsfiltered.pdf)
+![MARKER GENES UMAP After removing outliers](Rplotsfiltered.pdf)
+
+### Annotations after removing outlier Clusters
+![Annotations After removing outliers](mouseBrain_filtered_CellTypeUMAP_annotated.png) 
+
+
 
 ### Cell Counts Per Sample
 
