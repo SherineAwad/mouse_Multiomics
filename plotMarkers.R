@@ -8,8 +8,9 @@ addArchRThreads(threads = 4)
 addArchRGenome("mm10")
 setwd("/nfs/turbo/umms-thahoang/sherine/mouse_Multiomics")
 
-# Load project
-project_name <- "mouseBrain"
+
+args <- commandArgs(trailingOnly = TRUE)
+project_name <- args[1]
 proj_ALL <- loadArchRProject(path = project_name, force = FALSE, showLogo = TRUE)
 
 # Read marker genes
@@ -34,7 +35,8 @@ plot_gene_umap_zscore <- function(proj, gene_symbol) {
   }
   
   expr_values <- log_norm_expr[gene_idx, ]
-  
+ 
+  figure_name = paste0(project_name,"UMAP_Zscore_normalised") 
   # Get embedding
   embedding <- getEmbedding(proj, embedding = "UMAP_Combined", returnDF = TRUE)
   
@@ -63,18 +65,19 @@ plot_gene_umap_zscore <- function(proj, gene_symbol) {
 p <- ggplot(df, aes(x = UMAP_1, y = UMAP_2, color = ExpressionZ)) +
   geom_point(size = 0.5) +
   scale_color_gradientn(
-    colors = c("#add8e6", "#8B0000"),  # Deep red to light blue
+    colors = c("#D3D3D3", "#8B0000"),  # Deep red to light blue
     limits = c(min(df$ExpressionZ, na.rm = TRUE), max(df$ExpressionZ, na.rm = TRUE))
   ) +
   theme_minimal() +
-  ggtitle(paste0("UMAP: Z-score normalized ", gene_symbol))
+  ggtitle(paste0(figure_name, gene_symbol))
 
 print(p)
 
+figure_name = paste0(project_name,"UMAP_Zscore_")
 # Save PDF using ArchR helper
 plotPDF(
   p,
-  name = paste0("UMAP_Zscore_", gene_symbol, ".pdf"),
+  name = paste0(figure_name, gene_symbol, ".pdf"),
   ArchRProj = proj,
   addDOC = FALSE,
   width = 5,
